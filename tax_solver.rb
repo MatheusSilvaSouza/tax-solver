@@ -2,7 +2,9 @@ class TaxSolver
   attr_reader :sale_taxes, :total
 
   def solve(input = nil)
-    unless input
+    if input
+      input = input.split("\n")
+    else
       input = []
       while (line = gets) != "\n"
         input << line
