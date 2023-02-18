@@ -1,11 +1,16 @@
 class TaxSolver
-  def solve()
-    input = []
-    while (line = gets) != "\n"
-      input << line
+  attr_reader :sale_taxes, :total
+
+  def solve(input = nil)
+    unless input
+      input = []
+      while (line = gets) != "\n"
+        input << line
+      end
     end
-    sale_taxes = 0
-    total = 0
+
+    @sale_taxes = 0
+    @total = 0
     input.map do |inp|
       amount = inp.split(" ").first.to_i
       product_name = inp.split(" at ").first.strip
@@ -21,12 +26,14 @@ class TaxSolver
 
       puts "#{product_name}: %.2f" % product_total
 
-      sale_taxes += tax_value
-      total += product_total
+      @sale_taxes += tax_value
+      @total += product_total
     end
+    @sale_taxes = sprintf("%.2f", @sale_taxes)
+    @total = sprintf("%.2f", @total)
 
-    puts "Sales Taxes: %.2f" % sale_taxes
-    puts "Total: %.2f" % total
+    puts "Sales Taxes: #{@sale_taxes}"
+    puts "Total: #{@total}"
   end
 
   def taxable_product?(product_name)
